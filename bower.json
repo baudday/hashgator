@@ -1,0 +1,14 @@
+{
+  "name": "Boilerplate",
+  "version": "1.0.0",
+  "main": "./main.js",
+  "dependencies": {
+    "jquery": "latest",
+    "underscore": "latest",
+    "requirejs": "latest",
+    "requirejs-text": "latest",
+    "bootstrap": "latest",
+    "backbone": "latest",
+    "jquery-masonry": "latest"
+  }
+}

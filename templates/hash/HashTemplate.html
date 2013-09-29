@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h1 id="hash-header">#<%=title%></h1>
+	</div>
+	<div id="feed" class="panel-body">
+		<% _.each(tiles, function(tile) { %>
+			<div class="tile col-lg-6 col-md-6 col-sm-1">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<%=tile.get('title')%>
+					</div>
+					<div class="panel-body">
+						<% if(tile.get('img')) { %>
+							<img src="<%=tile.get('img')%>" />
+						<% } else { %>
+							<%=tile.body%>
+						<% } %>
+					</div>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+</div>
