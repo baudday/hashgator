@@ -12,7 +12,7 @@ define([
 			var tiles = _.map(response.response, function(post) {
 				var tile = new TileModel({
 					id: post.id,
-					title: post.blog_name,
+					header: post.blog_name,
 					url: post.short_url,
 					date: new Date(post.date),
 					tags: post.tags
@@ -34,16 +34,18 @@ define([
 						});
 						break;
 					case "text":
+
 						tile.set({
-							body: "<h4>" + post.title + "</h4>"
-								+ "<div style='width: 100%; overflow: hidden;'>"
+							title: post.title,
+							body: "<div style='width: 100%; overflow: hidden;'>"
 								+ post.body + "</div>"
 						});
 						break;
 					case "link":
 						tile.set({
-							body: "<h4><a target='_blank' href='" + post.url + "'>"
-								+ post.title + "</a></h4>" + post.description
+							title: "<a target='_blank' href='" + post.url + "'>" 
+								+ post.title + "</a>",
+							body: post.description
 						})
 						break;
 				}
