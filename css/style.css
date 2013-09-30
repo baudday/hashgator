@@ -2,6 +2,10 @@
 	padding: 15px 0;
 }
 
+.tile {
+	overflow: hidden;
+}
+
 .tile div img {
 	width: 100%;
 }

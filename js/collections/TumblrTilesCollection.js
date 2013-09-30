@@ -14,19 +14,38 @@ define([
 					id: post.id,
 					title: post.blog_name,
 					url: post.short_url,
-					date: new Date(post.timestamp),
+					date: new Date(post.date),
 					tags: post.tags
 				});
 
 				switch(post.type) {
 					case "video":
-						tile.set({img: post.thumbnail_url});
+						tile.set({
+							body: post.caption + post.player[0].embed_code
+						});
 						break;
 					case "photo":
 						tile.set({img: post.photos[0].original_size.url});
 						break;
 					case "quote":
-						tile.set({body: "<h4>" + post.text + "</h4><h4>&mdash; " + post.source + "</h4>"});
+						tile.set({
+							body: "<h4>" + post.text + "</h4>"
+								+ "<h4>&mdash; " + post.source + "</h4>"
+						});
+						break;
+					case "text":
+						tile.set({
+							body: "<h4>" + post.title + "</h4>"
+								+ "<div style='width: 100%; overflow: hidden;'>"
+								+ post.body + "</div>"
+						});
+						break;
+					case "link":
+						tile.set({
+							body: "<h4><a target='_blank' href='" + post.url + "'>"
+								+ post.title + "</a></h4>" + post.description
+						})
+						break;
 				}
 
 				return tile;

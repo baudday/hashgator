@@ -7,11 +7,15 @@
 			<div class="tile col-lg-6 col-md-6 col-sm-1">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<%=tile.get('title')%>
+						<a target="_blank" href="<%=tile.get('url')%>">
+							<%=tile.get('title')%>
+						</a>
 					</div>
 					<div class="panel-body">
 						<% if(tile.get('img')) { %>
-							<img src="<%=tile.get('img')%>" />
+							<a target="_blank" href="<%=tile.get('img')%>">
+								<img src="<%=tile.get('img')%>" />
+							</a>
 						<% } else { %>
 							<%=tile.get('body')%>
 						<% } %>
@@ -20,9 +24,17 @@
 						<% if(tile.get('tags')) { %>
 							<span class="glyphicon glyphicon-tags"></span>
 							&nbsp;
-							<% _.each(tile.get('tags'), function(tag) { %>
-								<a href="#/hash/<%=tag%>"><%=tag%></a>,
-							<% }); %>
+							<% for(var i = 0; i < tile.get('tags').length; i++) {
+								var tag = tile.get('tags')[i];
+								stripped = tag.replace(/\s/g, "").replace(/\W/g, "");
+								if(stripped) {
+									if(i === tile.get('tags').length - 1) { %>
+										<a href="#/hash/<%=tag.replace(/\s/g, "").replace(/\W/g, "")%>"><%=tag.replace(/\s/g, "").replace(/\W/g, "")%></a>
+									<% } else { %>
+										<a href="#/hash/<%=tag.replace(/\s/g, "").replace(/\W/g, "")%>"><%=tag.replace(/\s/g, "").replace(/\W/g, "")%></a>,
+									<% } %>
+								<% } %>
+							<% }; %>
 						<% } %>
 					</div>
 				</div>

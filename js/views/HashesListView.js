@@ -16,7 +16,13 @@ define([
 			this.page = Backbone.history.location.hash.split("/")[2];
 			this.$el.html("");
 			this.hashes.each(function(hash) {
-				hash.set({active: _this.page == hash.get('title')});
+				if(_this.page) {
+					hash.set({
+					active: _this.page.toLowerCase() 
+							== hash.get('title').toLowerCase()
+					});
+				}
+
 				_this.$el.append(
 					"<a href='#/hash/" + hash.get("title") 
 					+ "' class='hash list-group-item " 
