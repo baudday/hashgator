@@ -13,7 +13,9 @@ define([
 				var tile = new TileModel({
 					id: post.id,
 					title: post.blog_name,
-					url: post.short_url
+					url: post.short_url,
+					date: new Date(post.timestamp),
+					tags: post.tags
 				});
 
 				switch(post.type) {
@@ -23,6 +25,8 @@ define([
 					case "photo":
 						tile.set({img: post.photos[0].original_size.url});
 						break;
+					case "quote":
+						tile.set({body: "<h4>" + post.text + "</h4><h4>&mdash; " + post.source + "</h4>"});
 				}
 
 				return tile;

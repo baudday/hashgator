@@ -5,7 +5,6 @@ require.config({
 		backbone: '../lib/backbone/backbone-min',
 		text: '../lib/requirejs-text/text',
 		bootstrap: '../lib/bootstrap/dist/js/bootstrap.min',
-		masonry: '../lib/jquery-masonry/masonry',
 		outlayer: '../lib/outlayer',
 		'get-style-property': '../lib/get-style-property',
 		'get-size': '../lib/get-size',
@@ -13,6 +12,8 @@ require.config({
 		eventEmitter: '../lib/eventEmitter',
 		'doc-ready': '../lib/doc-ready',
 		'matches-selector': '../lib/matches-selector',
+		imagesLoaded: '../lib/imagesloaded/imagesloaded',
+		masonry: '../lib/jquery-masonry/masonry',
 		AppView: 'AppView'
 	},
 	shim: {

@@ -13,7 +13,16 @@
 						<% if(tile.get('img')) { %>
 							<img src="<%=tile.get('img')%>" />
 						<% } else { %>
-							<%=tile.body%>
+							<%=tile.get('body')%>
+						<% } %>
+					</div>
+					<div class="panel-footer">
+						<% if(tile.get('tags')) { %>
+							<span class="glyphicon glyphicon-tags"></span>
+							&nbsp;
+							<% _.each(tile.get('tags'), function(tag) { %>
+								<a href="#/hash/<%=tag%>"><%=tag%></a>,
+							<% }); %>
 						<% } %>
 					</div>
 				</div>

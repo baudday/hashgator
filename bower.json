@@ -9,6 +9,7 @@
     "requirejs-text": "latest",
     "bootstrap": "latest",
     "backbone": "latest",
-    "jquery-masonry": "latest"
+    "jquery-masonry": "latest",
+    "imagesloaded": "latest"
   }
 }
