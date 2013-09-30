@@ -21,6 +21,10 @@ define([
 					active: _this.page.toLowerCase() 
 							== hash.get('title').toLowerCase()
 					});
+				} else {
+					hash.set({
+						active: false
+					});
 				}
 
 				_this.$el.append(

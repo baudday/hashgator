@@ -26,23 +26,23 @@
 						<% } %>
 					</div>
 
-					<div class="panel-footer">
 						<% if(tile.get('tags')) { %>
-							<span class="glyphicon glyphicon-tags"></span>
-							&nbsp;
-							<% for(var i = 0; i < tile.get('tags').length; i++) {
-								var tag = tile.get('tags')[i];
-								stripped = tag.replace(/\s/g, "").replace(/\W/g, "");
-								if(stripped) {
-									if(i === tile.get('tags').length - 1) { %>
-										<a href="#/hash/<%=tag.replace(/\s/g, "").replace(/\W/g, "")%>"><%=tag.replace(/\s/g, "").replace(/\W/g, "")%></a>
-									<% } else { %>
-										<a href="#/hash/<%=tag.replace(/\s/g, "").replace(/\W/g, "")%>"><%=tag.replace(/\s/g, "").replace(/\W/g, "")%></a>,
+							<div class="panel-footer">
+								<span class="glyphicon glyphicon-tags"></span>
+								&nbsp;
+								<% for(var i = 0; i < tile.get('tags').length; i++) {
+									var tag = tile.get('tags')[i];
+									stripped = tag.replace(/\s/g, "").replace(/\W/g, "");
+									if(stripped) {
+										if(i === tile.get('tags').length - 1) { %>
+											<a href="#/hash/<%=tag.replace(/\s/g, "").replace(/\W/g, "")%>"><%=tag.replace(/\s/g, "").replace(/\W/g, "")%></a>
+										<% } else { %>
+											<a href="#/hash/<%=tag.replace(/\s/g, "").replace(/\W/g, "")%>"><%=tag.replace(/\s/g, "").replace(/\W/g, "")%></a>,
+										<% } %>
 									<% } %>
-								<% } %>
-							<% }; %>
+								<% }; %>
+							</div>
 						<% } %>
-					</div>
 
 				</div>
 			</div>

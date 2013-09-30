@@ -6,9 +6,11 @@ define([
 	'text!../../templates/hash/HashTemplate.html',
 	'models/TumblrTiles',
 	'collections/TumblrTilesCollection',
+	'collections/GoogleTilesCollection',
 	'collections/TilesCollection'
 ], function(Backbone, imagesLoaded, Masonry, LeftView, HashTemplate, 
-			TumblrTiles, TumblrTilesCollection, TilesCollection) {
+			TumblrTiles, TumblrTilesCollection, GoogleTilesCollection, 
+			TilesCollection) {
 	var HashView = Backbone.View.extend({
 		el: '.body',
 		render: function() {
@@ -16,24 +18,33 @@ define([
 			var data = {};
 			var tiles = new TilesCollection();
 			var tumblrTiles = new TumblrTilesCollection();
+			var googleTiles = new GoogleTilesCollection();
 			new LeftView();
 
 			data.title = this.options.hash;
 			tumblrTiles.url = "http://api.tumblr.com/v2/tagged?tag=" 
 				+ this.options.hash 
 				+ "&limit=15&api_key=JlflsMVkGqc2MU1SJ7x6HajnrEfcRxJEIC1RN4qqIgZFhwoswL";
+			googleTiles.url = "https://www.googleapis.com/plus/v1/activities?query=" 
+				+ this.options.hash + "&key=AIzaSyBY3PbFeRff3wUwjbQlaqgcoO1Ib_CpO5k";
+
 			tumblrTiles.fetch({
 				success: function(posts) {
 					tiles.add(posts.models);
-					data.tiles = tiles.models;
-					var hashTemplate = _.template(HashTemplate, data);
-					_this.$el.html(hashTemplate);
-					var feed = _this.el.querySelector('#feed');
-					imagesLoaded(feed, function() {
-						var msnry = new Masonry(feed, {
-							itemSelector: ".tile",
-							columnWidth: ".tile"
-						});
+					googleTiles.fetch({
+						success: function(posts) {
+							tiles.add(posts.models);
+							data.tiles = tiles.models;
+							var hashTemplate = _.template(HashTemplate, data);
+							_this.$el.html(hashTemplate);
+							var feed = _this.el.querySelector('#feed');
+							imagesLoaded(feed, function() {
+								var msnry = new Masonry(feed, {
+									itemSelector: ".tile",
+									columnWidth: ".tile"
+								});
+							});
+						}
 					});
 				}
 			});
