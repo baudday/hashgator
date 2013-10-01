@@ -32,25 +32,28 @@ define([
 			googleTiles.url = "https://www.googleapis.com/plus/v1/activities?query=" 
 				+ this.options.hash + "&key=AIzaSyBY3PbFeRff3wUwjbQlaqgcoO1Ib_CpO5k";
 
-			tumblrTiles.fetch({
-				success: function(posts) {
-					tiles.add(posts.models);
-					googleTiles.fetch({
-						success: function(posts) {
-							tiles.add(posts.models);
-							data.tiles = tiles.models;
-							var hashTemplate = _.template(HashTemplate, data);
-							_this.$el.html(hashTemplate);
-							var feed = _this.el.querySelector('#feed');
-							imagesLoaded(feed, function() {
-								var msnry = new Masonry(feed, {
-									itemSelector: ".tile",
-									columnWidth: ".tile"
-								});
-							});
-						}
+			$.when(
+				tumblrTiles.fetch({
+					success: function(posts) {
+						tiles.add(posts.models);
+					}
+				}),
+				googleTiles.fetch({
+					success: function(posts) {
+						tiles.add(posts.models);
+					}
+				})
+			).done(function() {
+				data.tiles = tiles.models;
+				var hashTemplate = _.template(HashTemplate, data);
+				_this.$el.html(hashTemplate);
+				var feed = _this.el.querySelector('#feed');
+				imagesLoaded(feed, function() {
+					var msnry = new Masonry(feed, {
+						itemSelector: ".tile",
+						columnWidth: ".tile"
 					});
-				}
+				});
 			});
 		}
 	});
