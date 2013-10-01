@@ -4,11 +4,12 @@ define([
 	'masonry',
 	'views/LeftView',
 	'text!../../templates/hash/HashTemplate.html',
+	'text!../../templates/loader.html',
 	'models/TumblrTiles',
 	'collections/TumblrTilesCollection',
 	'collections/GoogleTilesCollection',
 	'collections/TilesCollection'
-], function(Backbone, imagesLoaded, Masonry, LeftView, HashTemplate, 
+], function(Backbone, imagesLoaded, Masonry, LeftView, HashTemplate, template,
 			TumblrTiles, TumblrTilesCollection, GoogleTilesCollection, 
 			TilesCollection) {
 	var HashView = Backbone.View.extend({
@@ -20,6 +21,9 @@ define([
 			var tumblrTiles = new TumblrTilesCollection();
 			var googleTiles = new GoogleTilesCollection();
 			new LeftView();
+
+			var loader = _.template(template);
+			this.$el.html(loader);
 
 			data.title = this.options.hash;
 			tumblrTiles.url = "http://api.tumblr.com/v2/tagged?tag=" 
