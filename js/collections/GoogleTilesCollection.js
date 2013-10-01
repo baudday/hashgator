@@ -10,37 +10,42 @@ define([
 		},
 		parse: function(response) {
 			var tiles = _.map(response.items, function(post) {
-				if(post.object.objectType !== "note") {
-					var tile = new TileModel({
-						id: post.id,
-						header: post.actor.displayName,
-						url: post.url,
-						date: new Date(post.published),
-						body: post.object.content
-					});
+				var tile = new TileModel({
+					id: post.id,
+					header: post.actor.displayName,
+					url: post.url,
+					date: new Date(post.published),
+					body: post.object.content
+				});
 
-					if(post.object.hasOwnProperty("attachments")) {
-						switch(post.object.objectType) {
-							case "video":
-								tile.set({
-									img: post.object.attachments[0].image.url
-								});
-								break;
-							case "photo":
-								tile.set({
-									img: post.object.attachments[0].image.url
-								});
-								break;
-							case "album":
-								tile.set({
-									img: post.object.attachments[0].thumbnails[0].image.url
-								});
-								break;
-						}
+				if(post.object.hasOwnProperty("attachments")) {
+					switch(post.object.attachments[0].objectType) {
+						case "video":
+							tile.set({
+								img: post.object.attachments[0].image.url
+							});
+							break;
+						case "photo":
+							tile.set({
+								img: post.object.attachments[0].image.url
+							});
+							break;
+						case "album":
+							tile.set({
+								img: post.object.attachments[0].thumbnails
+							});
+							break;
+						case "article":
+							tile.set({
+								title: post.object.attachments[0].displayName,
+								body: post.object.attachments[0].content,
+								url: post.object.attachments[0].url
+							});
+							break;
 					}
-
-					return tile;
 				}
+
+				return tile;
 			});
 
 			return tiles;

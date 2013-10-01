@@ -4,27 +4,38 @@
 	</div>
 	<div id="feed" class="panel-body">
 		<% _.each(tiles, function(tile) { %>
-			<div class="tile col-lg-6 col-md-6 col-sm-1">
-				<div class="panel panel-default">
+			<% if(tile.get('img') || tile.get('body')) { %>
+				<div class="tile col-lg-6 col-md-6 col-sm-1">
+					<div class="panel panel-default">
 
-					<div class="panel-heading">
-						<a target="_blank" href="<%=tile.get('url')%>">
-							<%=tile.get('header')%>
-						</a>
-					</div>
-
-					<div class="panel-body">
-						<% if(tile.get('title')) { %>
-							<h4><%=tile.get('title')%></h4>
-						<% } %>
-						<% if(tile.get('img')) { %>
-							<a target="_blank" href="<%=tile.get('img')%>">
-								<img src="<%=tile.get('img')%>" />
+						<div class="panel-heading">
+							<a target="_blank" href="<%=tile.get('url')%>">
+								<%=tile.get('header')%>
 							</a>
-						<% } else { %>
-							<%=tile.get('body')%>
-						<% } %>
-					</div>
+						</div>
+
+						<div class="panel-body">
+							<% if(tile.get('title')) { %>
+								<h4><a target="_blank" href="<%=tile.get('url')%>">
+									<%=tile.get('title')%>
+								</a></h4>
+							<% } %>
+							<% if(tile.get('img')) { %>
+								<% if(tile.get('img') instanceof Array) {
+									_.each(tile.get('img'), function(tn) { %>
+										<a target="_blank" href="<%=tile.get('url')%>">
+											<img src="<%=tn.image.url%>" />
+										</a>
+									<% }); %>
+								<% } else { %>
+									<a target="_blank" href="<%=tile.get('url')%>">
+										<img src="<%=tile.get('img')%>" />
+									</a>
+								<% } %>
+							<% } else { %>
+								<%=tile.get('body')%>
+							<% } %>
+						</div>
 
 						<% if(tile.get('tags')) { %>
 							<div class="panel-footer">
@@ -44,8 +55,9 @@
 							</div>
 						<% } %>
 
+					</div>
 				</div>
-			</div>
+			<% } %>
 		<% }); %>
 	</div>
 </div>
