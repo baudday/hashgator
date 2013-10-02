@@ -32,7 +32,8 @@
 										<img src="<%=tile.get('img')%>" />
 									</a>
 								<% } %>
-							<% } else { %>
+							<% } %>
+							<% if(tile.get('body')) { %>
 								<%=tile.get('body')%>
 							<% } %>
 						</div>

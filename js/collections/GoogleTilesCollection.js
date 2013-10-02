@@ -31,6 +31,7 @@ define([
 							break;
 						case "photo":
 							tile.set({
+								body: post.object.attachments[0].displayName,
 								img: post.object.attachments[0].image.url
 							});
 							break;
