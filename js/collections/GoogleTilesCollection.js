@@ -43,7 +43,6 @@ define([
 						case "article":
 							tile.set({
 								title: post.object.attachments[0].displayName,
-								body: post.object.attachments[0].content,
 								url: post.object.attachments[0].url
 							});
 							break;
