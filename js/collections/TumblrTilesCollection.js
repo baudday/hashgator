@@ -4,6 +4,10 @@ define([
 ], function(Backbone, TileModel) {
 	var TumblrTilesCollection = Backbone.Collection.extend({
 		model: TileModel,
+		initialize: function(models, options) {
+			this.url = "http://api.tumblr.com/v2/tagged?tag=" + options.tag
+				+ "&limit=15&api_key=JlflsMVkGqc2MU1SJ7x6HajnrEfcRxJEIC1RN4qqIgZFhwoswL";
+		},
 		sync: function(method, model, options) {
 			options.dataType = "jsonp";
 			return Backbone.sync(method, model, options);

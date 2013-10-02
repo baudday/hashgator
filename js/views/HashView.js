@@ -18,19 +18,12 @@ define([
 			var _this = this;
 			var data = {};
 			var tiles = new TilesCollection();
-			var tumblrTiles = new TumblrTilesCollection();
-			var googleTiles = new GoogleTilesCollection();
+			var tumblrTiles = new TumblrTilesCollection([], {tag: this.options.hash});
+			var googleTiles = new GoogleTilesCollection([], {tag: this.options.hash});
 			new LeftView();
-
 			var loader = _.template(template);
 			this.$el.html(loader);
-
 			data.title = this.options.hash;
-			tumblrTiles.url = "http://api.tumblr.com/v2/tagged?tag=" 
-				+ this.options.hash 
-				+ "&limit=15&api_key=JlflsMVkGqc2MU1SJ7x6HajnrEfcRxJEIC1RN4qqIgZFhwoswL";
-			googleTiles.url = "https://www.googleapis.com/plus/v1/activities?query=" 
-				+ this.options.hash + "&key=AIzaSyBY3PbFeRff3wUwjbQlaqgcoO1Ib_CpO5k";
 
 			$.when(
 				tumblrTiles.fetch({

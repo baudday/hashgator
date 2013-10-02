@@ -4,6 +4,10 @@ define([
 ], function(Backbone, TileModel) {
 	var GoogleTilesCollection = Backbone.Collection.extend({
 		model: TileModel,
+		initialize: function(models, options) {
+			this.url = "https://www.googleapis.com/plus/v1/activities?query="
+				+ options.tag + "&key=AIzaSyBY3PbFeRff3wUwjbQlaqgcoO1Ib_CpO5k";
+		},
 		sync: function(method, model, options) {
 			options.dataType = "jsonp";
 			return Backbone.sync(method, model, options);
