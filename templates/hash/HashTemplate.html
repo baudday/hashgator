@@ -10,7 +10,7 @@
 
 						<div class="panel-heading">
 							<a target="_blank" href="<%=tile.get('url')%>">
-								<%=tile.get('header')%>
+								<%=tile.get('header')%> <small class="glyphicon glyphicon-new-window"></small>
 							</a>
 						</div>
 
@@ -34,7 +34,7 @@
 								<% } %>
 							<% } %>
 							<% if(tile.get('body')) { %>
-								<%=tile.get('body')%>
+								<p><%=tile.get('body')%></p>
 							<% } %>
 						</div>
 
@@ -47,9 +47,9 @@
 									stripped = tag.replace(/\s/g, "").replace(/\W/g, "");
 									if(stripped) {
 										if(i === tile.get('tags').length - 1) { %>
-											<a href="#/hash/<%=tag.replace(/\s/g, "").replace(/\W/g, "")%>"><%=tag.replace(/\s/g, "").replace(/\W/g, "")%></a>
+											<a href="#/hash/<%=tag.replace(/\s/g, "").replace(/\W/g, "")%>">#<%=tag.replace(/\s/g, "").replace(/\W/g, "")%></a>
 										<% } else { %>
-											<a href="#/hash/<%=tag.replace(/\s/g, "").replace(/\W/g, "")%>"><%=tag.replace(/\s/g, "").replace(/\W/g, "")%></a>,
+											<a href="#/hash/<%=tag.replace(/\s/g, "").replace(/\W/g, "")%>">#<%=tag.replace(/\s/g, "").replace(/\W/g, "")%></a>,
 										<% } %>
 									<% } %>
 								<% }; %>

@@ -13,6 +13,7 @@ define([
 			return Backbone.sync(method, model, options);
 		},
 		parse: function(response) {
+			var _this = this;
 			var tiles = _.map(response.items, function(post) {
 				var tile = new TileModel({
 					id: post.id,
@@ -20,6 +21,10 @@ define([
 					url: post.url,
 					date: new Date(post.published),
 					body: post.object.content
+				});
+
+				tile.set({
+					tags: _this.getTags(_this.stripHtml(tile.get('body')))
 				});
 
 				if(post.object.hasOwnProperty("attachments")) {
@@ -31,7 +36,6 @@ define([
 							break;
 						case "photo":
 							tile.set({
-								body: post.object.attachments[0].displayName,
 								img: post.object.attachments[0].image.url
 							});
 							break;
@@ -53,6 +57,14 @@ define([
 			});
 
 			return tiles;
+		},
+		stripHtml: function(str) {
+			var div = document.createElement("div");
+			div.innerHTML = str;
+			return div.textContent || div.innerText || "";
+		},
+		getTags: function(str) {
+			return str.match(/#\S*/g);
 		}
 	});
 

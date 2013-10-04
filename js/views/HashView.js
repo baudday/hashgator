@@ -25,7 +25,7 @@ define([
 			this.$el.html(loader);
 			data.title = this.options.hash;
 
-			$.when(
+			jQuery.when(
 				tumblrTiles.fetch({
 					success: function(posts) {
 						tiles.add(posts.models);
