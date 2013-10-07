@@ -28,12 +28,12 @@ define([
 			jQuery.when(
 				tumblrTiles.fetch({
 					success: function(posts) {
-						tiles.add(posts.models);
+						tiles.insert(posts.models);
 					}
 				}),
 				googleTiles.fetch({
 					success: function(posts) {
-						tiles.add(posts.models);
+						tiles.insert(posts.models);
 					}
 				})
 			).done(function() {

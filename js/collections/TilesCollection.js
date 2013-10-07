@@ -8,6 +8,7 @@ define([
 			return -tile.get('date');
 		},
 		insert: function(models) {
+			var tagsString = "";
 			_.each(models, function(model) {
 				var tags = model.get('tags'),
 					body = model.get('body'),
@@ -19,14 +20,19 @@ define([
 							stripped = tag.replace(/\s/g, "").replace(/\W/g, "");
 						if(stripped && stripped != " ") {
 							if(i === tags.length - 1) {
-								tagsString += '<a href="#/hash/tag">#tag</a>';
+								tagsString += '<a href="#/hash/' + stripped + '">#' + stripped + '</a>';
 							} else {
-								tagsString += '<a href="#/hash/tag">#tag</a>,';
+								tagsString += '<a href="#/hash/' + stripped + '">#' + stripped + '</a>, ';
 							}
 						}
 					}
 				}
+				if(tagsString != "") {
+					model.set('tagsString', tagsString);
+				}
 			});
+
+			this.add(models);
 		}
 	});
 

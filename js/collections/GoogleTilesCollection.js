@@ -5,7 +5,7 @@ define([
 	var GoogleTilesCollection = Backbone.Collection.extend({
 		model: TileModel,
 		initialize: function(models, options) {
-			this.url = "https://www.googleapis.com/plus/v1/activities?query="
+			this.url = "https://www.googleapis.com/plus/v1/activities?query=%23"
 				+ options.tag + "&key=AIzaSyBY3PbFeRff3wUwjbQlaqgcoO1Ib_CpO5k";
 		},
 		sync: function(method, model, options) {
@@ -64,7 +64,11 @@ define([
 			return div.textContent || div.innerText || "";
 		},
 		getTags: function(str) {
-			return str.match(/#\S*/g);
+			var arr = str.match(/#\S*/g);
+			for(var i = 0; i < arr.length; i++) {
+				arr[i] = arr[i].substring(1);
+			}
+			return arr;
 		}
 	});
 
