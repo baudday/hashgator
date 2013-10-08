@@ -5,6 +5,7 @@ define([
 	var TilesCollection = Backbone.Collection.extend({
 		model: TileModel,
 		counter: [],
+		tagsString: "",
 		initialize: function(models, options) {
 			this.tag = options.tag;
 		},
@@ -13,33 +14,50 @@ define([
 		},
 		insert: function(models) {
 			var _this = this;
-			var tagsString = "";
 			this.counter = [];
 			_.each(models, function(model) {
 				var tags = model.get('tags'),
-					body = model.get('body'),
-					tagsString = "";
+					body = model.get('body');
 
-				if(tags) {
-					for(var i = 0; i < tags.length; i++) {
-						var tag = tags[i],
-							stripped = tag.replace(/\s/g, "").replace(/\W/g, "");
-						if(stripped && stripped != " ") {
-							if(i === tags.length - 1) {
-								tagsString += '<a href="#/hash/' + stripped + '">#' + stripped + '</a>';
-							} else {
-								tagsString += '<a href="#/hash/' + stripped + '">#' + stripped + '</a>, ';
-							}
-						}
+				_this.getPostTags(tags, function() {
+					if(this.tagsString != "") {
+						model.set('tagsString', _this.tagsString);
 					}
-				}
-				if(tagsString != "") {
-					model.set('tagsString', tagsString);
-				}
+				});
+
 				_this.getPopularTags(tags);
 			});
 
 			this.add(models);
+		},
+		getPostTags: function(tags, callback) {
+			this.tagsString = "";
+			if(tags) {
+				for(var i = 0; i < tags.length; i++) {
+					tags[i] = tags[i].replace(/\s/g, "").replace(/\W/g, "");
+					if(tags[i] && tags[i] != " ") {
+						this.tagsString += '<a href="#/hash/' 
+							+ tags[i] + '">#' + tags[i] + '</a>, ';
+					}
+				}
+				this.tagsString = this.tagsString.substring(0, this.tagsString.length-2);
+			}
+
+			callback();
+		},
+		getPopularTags: function(tags) {
+			this.countTags(tags);
+			this.popularTags = "";
+
+			for(var i = 0; i < 10; i++) {
+				var tag = this.counter[i];
+				if(tag) {
+					this.popularTags += '<a href="#/hash/' + tag.name + '">#'
+						+ tag.name + '</a>, ';
+				}
+			}
+
+			this.popularTags = this.popularTags.substring(0, this.popularTags.length-2);
 		},
 		countTags: function(tags) {
 			for(var i = 0; i < tags.length; i++) {
@@ -66,20 +84,6 @@ define([
 			this.counter.sort(function(a, b) {
 				return b.count-a.count;
 			});
-		},
-		getPopularTags: function(tags) {
-			this.countTags(tags);
-			this.popularTags = "";
-
-			for(var i = 0; i < 10; i++) {
-				var tag = this.counter[i];
-				if(tag) {
-					this.popularTags += '<a href="#/hash/' + tag.name + '">#'
-						+ tag.name + '</a>, ';
-				}
-			}
-
-			this.popularTags = this.popularTags.substring(0, this.popularTags.length-2);
 		}
 	});
 
