@@ -20,7 +20,7 @@
 									<%=tile.get('title')%>
 								</a></h4>
 							<% } %>
-							
+
 							<% if(tile.get('img')) { %>
 								<% if(tile.get('img') instanceof Array) {
 									_.each(tile.get('img'), function(tn) { %>
@@ -52,5 +52,8 @@
 				</div>
 			<% } %>
 		<% }); %>
+	</div>
+	<div class="panel-footer">
+		<%=popularTags%>
 	</div>
 </div>

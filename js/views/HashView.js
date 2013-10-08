@@ -17,7 +17,7 @@ define([
 		render: function() {
 			var _this = this;
 			var data = {};
-			var tiles = new TilesCollection();
+			var tiles = new TilesCollection([], {tag: this.options.hash});
 			var tumblrTiles = new TumblrTilesCollection([], {tag: this.options.hash});
 			var googleTiles = new GoogleTilesCollection([], {tag: this.options.hash});
 			new LeftView();
@@ -38,6 +38,7 @@ define([
 				})
 			).done(function() {
 				data.tiles = tiles.models;
+				data.popularTags = tiles.popularTags;
 				var hashTemplate = _.template(HashTemplate, data);
 				_this.$el.html(hashTemplate);
 				var feed = _this.el.querySelector('#feed');
