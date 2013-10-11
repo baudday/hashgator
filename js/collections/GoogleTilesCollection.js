@@ -20,7 +20,8 @@ define([
 					header: post.actor.displayName,
 					url: post.url,
 					date: new Date(post.published),
-					body: post.object.content
+					body: post.object.content,
+					src: 'google'
 				});
 
 				tile.set({

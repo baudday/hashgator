@@ -19,7 +19,8 @@ define([
 					header: post.blog_name,
 					url: post.short_url,
 					date: new Date(post.date),
-					tags: post.tags
+					tags: post.tags,
+					src: 'tumblr'
 				});
 
 				switch(post.type) {

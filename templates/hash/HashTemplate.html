@@ -12,6 +12,22 @@
 							<a target="_blank" href="<%=tile.get('url')%>">
 								<%=tile.get('header')%> <small class="glyphicon glyphicon-new-window"></small>
 							</a>
+							<p class="pull-right">
+								<% switch(tile.get('src')) {
+									case 'google': %>
+										<a href="<%=tile.get('url')%>" 
+											rel="publisher" target="_top" style="text-decoration:none;">
+											<img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/>
+										</a>
+										<% break;
+									case 'tumblr': %>
+										<a href="<%=tile.get('url')%>" target="_blank">
+											<img src="http://platform.tumblr.com/v1/share_4.png" alt="Tumblr" style="
+											border:0;width:16px;height:16px;"/>
+										</a>
+										<% break;
+								} %>
+							</p>
 						</div>
 
 						<div class="panel-body">
