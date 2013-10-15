@@ -20,8 +20,7 @@ define([
 			appView.showView(homeView);
 		});
 		router.on('route:hash', function(hash) {
-			var hashView = new HashView();
-			hashView.options = {hash: hash};
+			var hashView = new HashView({hash: hash});
 			appView.showView(hashView);
 		});
 

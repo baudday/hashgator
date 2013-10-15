@@ -14,6 +14,9 @@ define([
 			TilesCollection) {
 	var HashView = Backbone.View.extend({
 		el: '.body',
+		initialize: function(options) {
+			this.options = options;
+		},
 		render: function() {
 			var _this = this;
 			var data = {};
