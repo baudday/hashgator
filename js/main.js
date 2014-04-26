@@ -1,8 +1,8 @@
 require.config({
 	paths: {
-		jquery: '../lib/jquery/jquery.min',
-		underscore: '../lib/underscore/underscore-min',
-		backbone: '../lib/backbone/backbone-min',
+		jquery: '../lib/jquery/dist/jquery.min',
+		underscore: '../lib/underscore/underscore',
+		backbone: '../lib/backbone/backbone',
 		text: '../lib/requirejs-text/text',
 		bootstrap: '../lib/bootstrap/dist/js/bootstrap.min',
 		outlayer: '../lib/outlayer',
