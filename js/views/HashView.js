@@ -9,7 +9,7 @@ define([
 	'collections/TumblrTilesCollection',
 	'collections/GoogleTilesCollection',
 	'collections/TilesCollection'
-], function(Backbone, imagesLoaded, Masonry, LeftView, HashTemplate, template,
+], function(Backbone, imagesLoaded, Masonry, LeftView, HashTemplate, LoaderTemplate,
 			TumblrTiles, TumblrTilesCollection, GoogleTilesCollection, 
 			TilesCollection) {
 	var HashView = Backbone.View.extend({
@@ -19,37 +19,42 @@ define([
 		},
 		render: function() {
 			var _this = this;
-			var data = {};
-			var tiles = new TilesCollection([], {tag: this.options.hash});
-			var tumblrTiles = new TumblrTilesCollection([], {tag: this.options.hash});
-			var googleTiles = new GoogleTilesCollection([], {tag: this.options.hash});
+			this.tiles = new TilesCollection([], {tag: this.options.hash});
+			this.tumblrTiles = new TumblrTilesCollection([], {tag: this.options.hash});
+			this.googleTiles = new GoogleTilesCollection([], {tag: this.options.hash});
 			new LeftView();
-			var loader = _.template(template);
+			var loader = _.template(LoaderTemplate);
 			this.$el.html(loader);
-			data.title = this.options.hash;
 
-			jQuery.when(
-				tumblrTiles.fetch({
+			jQuery.when(this.getPosts()).done(jQuery.proxy(this.displayTiles, this));
+		},
+		getPosts: function() {
+			var _this = this;
+			return jQuery.when(
+				this.tumblrTiles.fetch({
 					success: function(posts) {
-						tiles.insert(posts.models);
+						_this.tiles.insert(posts.models);
 					}
 				}),
-				googleTiles.fetch({
+				this.googleTiles.fetch({
 					success: function(posts) {
-						tiles.insert(posts.models);
+						_this.tiles.insert(posts.models);
 					}
 				})
-			).done(function() {
-				data.tiles = tiles.models;
-				data.popularTags = tiles.popularTags;
-				var hashTemplate = _.template(HashTemplate, data);
-				_this.$el.html(hashTemplate);
-				var feed = _this.el.querySelector('#feed');
-				imagesLoaded(feed, function() {
-					var msnry = new Masonry(feed, {
-						itemSelector: ".tile",
-						columnWidth: ".tile"
-					});
+			).done();
+		},
+		displayTiles: function() {
+			var data = {};
+			data.title = this.options.hash;
+			data.tiles = this.tiles.models;
+			data.popularTags = this.tiles.popularTags;
+			var hashTemplate = _.template(HashTemplate, data);
+			this.$el.html(hashTemplate);
+			var feed = this.el.querySelector('#feed');
+			imagesLoaded(feed, function() {
+				var msnry = new Masonry(feed, {
+					itemSelector: ".tile",
+					columnWidth: ".tile"
 				});
 			});
 		}
