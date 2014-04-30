@@ -16,6 +16,7 @@ define([
 		el: '.body',
 		initialize: function(options) {
 			this.options = options;
+			document.title = this.pageTitle = "#" + this.options.hash + " on hashgator";
 		},
 		events: {
 			'click #new-post-alert-container': 'loadNewPosts'
@@ -79,6 +80,7 @@ define([
 		poll: function() {
 			this.getPosts(this.tiles, true, function() {
 				if(this.newPostCount > 0) {
+					document.title = "(" + this.newPostCount + ") " + this.pageTitle;
 					$(this.alert).html(this.newPostCount + " new posts! Click to load.");
 					$(this.alertContainer).show();
 					this.msnry.layout();
@@ -86,6 +88,7 @@ define([
 			});
 		},
 		loadNewPosts: function() {
+			document.title = this.pageTitle;
 			$(this.alertContainer).hide();
 			$(this.alert).html("");
 			this.newPostCount = 0;
