@@ -26,8 +26,6 @@ define([
 			this.tumblrTiles = new TumblrTilesCollection([], {tag: this.options.hash});
 			this.googleTiles = new GoogleTilesCollection([], {tag: this.options.hash});
 			this.newPostCount = 0;
-			this.alertContainer = this.el.querySelector("#new-post-alert-container");
-			this.alert = this.el.querySelector("#new-post-alert");
 			new LeftView();
 			var loader = _.template(LoaderTemplate);
 			this.$el.html(loader);
@@ -67,6 +65,8 @@ define([
 			data.popularTags = this.tiles.popularTags;
 			var hashTemplate = _.template(HashTemplate, data);
 			this.$el.html(hashTemplate);
+			this.alertContainer = this.el.querySelector("#new-post-alert-container");
+			this.alert = this.el.querySelector("#new-post-alert");
 			var feed = this.el.querySelector('#feed');
 			imagesLoaded(feed, function() {
 				_this.msnry = new Masonry(feed, {
@@ -78,11 +78,9 @@ define([
 		},
 		poll: function() {
 			this.getPosts(this.tiles, true, function() {
-				var alertContainer = this.el.querySelector("#new-post-alert-container");
-				var alert = this.el.querySelector("#new-post-alert");
 				if(this.newPostCount > 0) {
-					$(alert).html(this.newPostCount + " new posts! Click to load.");
-					$(alertContainer).show();
+					$(this.alert).html(this.newPostCount + " new posts! Click to load.");
+					$(this.alertContainer).show();
 					this.msnry.layout();
 				}
 			});
