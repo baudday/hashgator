@@ -15,26 +15,32 @@ define([
 	var HashView = Backbone.View.extend({
 		el: '.body',
 		initialize: function(options) {
-			this.options = options;
-			document.title = this.pageTitle = "#" + this.options.hash + " on hashgator";
 		},
 		events: {
 			'click #new-post-alert-container': 'loadNewPosts'
 		},
-		render: function() {
+		render: function(hash) {
 			var _this = this;
-			this.tiles = new TilesCollection([], {tag: this.options.hash});
-			this.tumblrTiles = new TumblrTilesCollection([], {tag: this.options.hash});
-			this.googleTiles = new GoogleTilesCollection([], {tag: this.options.hash});
+			this.hash = hash;
+			if(this.tiles) delete this.tiles;
+			this.tiles = new TilesCollection([], {tag: this.hash});
+			this.tumblrTiles = new TumblrTilesCollection([], {tag: this.hash});
+			this.googleTiles = new GoogleTilesCollection([], {tag: this.hash});
+			if(this.interval) clearInterval(this.interval);
+			this.postCount = this.tiles.size();
 			this.newPostCount = 0;
 			new LeftView();
 			var loader = _.template(LoaderTemplate);
 			this.$el.html(loader);
+			document.title = this.pageTitle = "#" + this.hash + " on hashgator";
 
-			this.getPosts(this.tiles, this.displayTiles);
-			setInterval(function() { _this.poll() }, 30000);
+			this.getPosts(function() {
+				_this.postCount = _this.tiles.size();
+				_this.displayTiles();
+			});
+			this.interval = setInterval(function() { _this.poll() }, 30000);
 		},
-		getPosts: function(tiles, poll, callback) {
+		getPosts: function(poll, callback) {
 			var _this = this;
 			if(typeof poll == "function") {
 				callback = poll;
@@ -44,16 +50,14 @@ define([
 			jQuery.when(
 				this.tumblrTiles.fetch({
 					success: function(posts) {
-						var newPosts = _.difference(posts.models, tiles.models);
-						if(poll) _this.newPostCount += newPosts.length;
-						tiles.insert(newPosts);
+						_this.tiles.insert(posts.models);
+						if(poll) _this.tiles.without(posts.models);
 					}
 				}),
 				this.googleTiles.fetch({
 					success: function(posts) {
-						var newPosts = _.difference(posts.models, tiles.models);
-						if(poll) _this.newPostCount += newPosts.length;
-						tiles.insert(newPosts);
+						_this.tiles.insert(posts.models);
+						if(poll) _this.tiles.without(posts.models);
 					}
 				})
 			).done(jQuery.proxy(callback, this));
@@ -61,7 +65,7 @@ define([
 		displayTiles: function() {
 			var _this = this;
 			var data = {};
-			data.title = this.options.hash;
+			data.title = this.hash;
 			data.tiles = this.tiles.models;
 			data.popularTags = this.tiles.popularTags;
 			var hashTemplate = _.template(HashTemplate, data);
@@ -78,7 +82,8 @@ define([
 			});
 		},
 		poll: function() {
-			this.getPosts(this.tiles, true, function() {
+			this.getPosts(true, function() {
+				this.newPostCount = this.tiles.size() - this.postCount;
 				if(this.newPostCount > 0) {
 					document.title = "(" + this.newPostCount + ") " + this.pageTitle;
 					$(this.alert).html(this.newPostCount + " new posts! Click to load.");
@@ -92,6 +97,8 @@ define([
 			$(this.alertContainer).hide();
 			$(this.alert).html("");
 			this.newPostCount = 0;
+			this.postCount = this.tiles.size();
+			this.tiles.sort();
 			this.displayTiles();
 		}
 	});

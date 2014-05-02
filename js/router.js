@@ -8,7 +8,8 @@ define([
 		routes: {
 			'': 'home',
 			'hash/:hash': 'hash'
-		}
+		},
+		hashView: new HashView()
 	});
 
 	var initialize = function() {
@@ -20,8 +21,7 @@ define([
 			appView.showView(homeView);
 		});
 		router.on('route:hash', function(hash) {
-			var hashView = new HashView({hash: hash});
-			appView.showView(hashView);
+			this.hashView.render(hash);
 		});
 
 		Backbone.history.start();
