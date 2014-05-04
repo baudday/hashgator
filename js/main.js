@@ -23,12 +23,16 @@ require.config({
 		},
 		'AppView': {
 			exports: 'AppView'
+		},
+		'bootstrap': {
+			deps: ['jquery']
 		}
 	}
 });
 
 require([
-	'app'
+	'app',
+	'bootstrap'
 ], 
 function(App) {
 	App.initialize();
