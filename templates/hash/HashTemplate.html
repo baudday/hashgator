@@ -3,7 +3,7 @@
 		<h1 id="hash-header">#<%=title%></h1>
 	</div>
 	<div id="feed" class="panel-body">
-		<div id="new-post-alert-container" class="stamp col-lg-12 col-md-12">
+		<div id="new-post-alert-container" class="stamp col-xs-12">
 			<div class="panel panel-default">
 				<div id="new-post-alert" class="panel-body">
 				</div>
@@ -11,7 +11,7 @@
 		</div>
 		<% _.each(tiles, function(tile) { %>
 			<% if(tile.get('img') || tile.get('body')) { %>
-				<div class="tile col-lg-6 col-md-6">
+				<div class="tile col-xs-12 col-sm-6">
 					<div class="panel panel-default">
 
 						<div class="panel-heading">
