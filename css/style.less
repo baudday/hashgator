@@ -9,6 +9,7 @@ body, html {
   background: @grey;
   font-family: 'Open Sans', sans-serif;
   font-weight: lighter;
+  padding-top: 30px; // For fixed nav
 }
 
 h1, h2, h3, h4, h5 {
@@ -48,6 +49,10 @@ a, a:link, a:hover, a:visited {
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: @screen-md-min) {
+  #menu-row {
+    position: fixed;
+    width: inherit;
+  }
 }
 
 /* Large devices (large desktops, 1200px and up) */

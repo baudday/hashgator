@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	<nav class="navbar navbar-default" role="navigation">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
 
 						<div class="navbar-header">
@@ -27,35 +27,37 @@
 			</div>
 	</nav>
 	<div class="container">
-		<div class="col-xs-12 col-md-4 left">
-			<div class="panel panel-default">
-				<form id="newhashform">
-					<div class="input-group panel-heading">
-							<span class="input-group-addon">#</span>
-							<input id="hashtoadd" class="form-control" type="text" 
-								placeholder="What interests you?" autofocus />
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="submit" 
-									id="submit">
-									&nbsp;
-										<span class="glyphicon glyphicon-plus">
-										</span>
-									&nbsp;
-								</button>
-							</span>
-						
-					</div>
-				</form>
-				<div class="panel-body">
-					<div id="hashes-container">
-						<!-- List group -->
-						<div class="list-group" id="hashes-list"></div>
+		<div id="menu-row" class="row">
+			<div class="col-xs-12 col-md-4 left">
+				<div class="panel panel-default">
+					<form id="newhashform">
+						<div class="input-group panel-heading">
+								<span class="input-group-addon">#</span>
+								<input id="hashtoadd" class="form-control" type="text"
+									placeholder="What interests you?" autofocus />
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="submit"
+										id="submit">
+										&nbsp;
+											<span class="glyphicon glyphicon-plus">
+											</span>
+										&nbsp;
+									</button>
+								</span>
+						</div>
+					</form>
+					<div class="panel-body">
+						<div id="hashes-container">
+							<!-- List group -->
+							<div class="list-group" id="hashes-list"></div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-		<div class="col-xs-12 col-md-8 body"></div>
+		<div class="row">
+			<div class="col-xs-12 col-md-8 col-md-offset-4 body"></div>
+		</div>
 	</div>
 
 	<script>
