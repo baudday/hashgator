@@ -1,7 +1,23 @@
 @import "variables";
+@import "../lib/bootstrap/less/bootstrap";
+@import "hasheslist";
+@import "navbar";
+
+@icon-font-path: "../lib/bootstrap/dist/fonts/";
 
 body, html {
   background: @grey;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: lighter;
+  padding-top: 40px; // For fixed nav
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: lighter;
+}
+
+a, a:link, a:hover, a:visited {
+  color: @secondaryColor;
 }
 
 #feed {
@@ -17,11 +33,28 @@ body, html {
 }
 
 #new-post-alert {
-  color: @dark;
+  color: @secondaryColor;
+  background: @grey;
   text-align: center;
 }
 
 #new-post-alert-container {
   display: none;
   cursor: pointer;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) {
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: @screen-md-min) {
+  #menu-row {
+    position: fixed;
+    width: inherit;
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: @screen-lg-min) {
 }
